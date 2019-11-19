@@ -1,0 +1,6 @@
+include LICENSE
+include README.md
+prune *.pyc
+recursive-include fab_addon_turbowidgets/static *
+recursive-include fab_addon_turbowidgets/templates *
+recursive-include fab_addon_turbowidgets/translations *
