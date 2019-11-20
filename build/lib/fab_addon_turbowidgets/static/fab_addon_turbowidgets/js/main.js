@@ -2,10 +2,8 @@
 function init_json_editor(fieldname, json_schema, starting_value, json_config) {
     configObj = JSON.parse(json_config);
     schemaObj = JSON.parse(json_schema);
-    startValObj = JSON.parse(starting_value)
     newConfigObj = {
        schema: schemaObj,
-       startval: startValObj,
        theme: 'spectre',
        iconlib: 'fontawesome4',
        object_layout: 'normal',
@@ -30,6 +28,10 @@ function init_json_editor(fieldname, json_schema, starting_value, json_config) {
        disable_array_delete_last_row: 0,
        prompt_before_delete: 1,
        ...configObj
+    }
+    if (starting_value !== "{}") {
+        startValObj = JSON.parse(starting_value)
+        newConfigObj =  {...newConfigObj, startval: startValOb}
     }
     theme = newConfigObj.theme
     iconlib = newConfigObj.iconlib

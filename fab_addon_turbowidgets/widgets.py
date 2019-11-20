@@ -67,6 +67,8 @@ class JsonEditorWidget(object):
         starting_value = ""
         if field.data:
             starting_value = '{}'.format(field.data)
+        else:
+            starting_value = "{}"
 
         if not self.schema:
             field.json_schema = "{}"
