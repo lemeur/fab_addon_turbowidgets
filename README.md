@@ -14,7 +14,6 @@ python setup.py install
 
 {% block head_css %}
     {{ super() }}
-    <!-- TIBO -->
 
     {% for c in addons_css %}
         <link rel="stylesheet" href="{{url_for(c[0],filename=c[1])}}">
