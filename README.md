@@ -41,7 +41,7 @@ The model remains unchanged (here the address string field will contain a Json e
 class Contact(Model):
     id = Column(Integer, primary_key=True)
     name =  Column(String(150), unique = True, nullable=False)
-    address =  Column(String(564), default='Street ')
+    address =  Column(String(564))
     personal_phone = Column(String(20))
     personal_cellphone = Column(String(20))
 
