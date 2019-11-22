@@ -1,9 +1,10 @@
 # Example Schema for APScheduler
 
-The following schema wil generate the following aotmatic form:
-<img src="images/json_editor_dependencies.gif" width="350">
+## Generated form preview
+<img src="images/json_editor_dependencies.gif" width="4000">
 
-Here is the correspondong schema:
+## Corresponding schema
+
 ```
     scheduler_schema = {
         "type": "object",
