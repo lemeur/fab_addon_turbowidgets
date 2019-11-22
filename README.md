@@ -2,7 +2,7 @@
 A collection of widgets for Flask-AppBuilder
 
 
-### Installation
+## Installation
 * Install the addon
 ````
 python setup.py install
@@ -35,6 +35,8 @@ appbuilder = AppBuilder(app, db.session, base_template='app_base.html')
 
 ## JsonEditorWidget
 JsonEditorWidget is a FAB addon widget to replace the default TextInput editor in a Flask-AppBuilder view (for a StringField).
+
+<img src="docs/images/json_editor_dependencies.gif" width="350">
 
 The model remains unchanged (here the address string field will contain a Json entry):
 ```
