@@ -79,6 +79,8 @@ The we preapre a schema describing the structure of the Json field so that JsonE
     }
 ```
 
+For a more complicated schema, see [APScheduler_schema](docs/APScheduler_schema.md)
+
 Then in your view, you can use the widget like this:
 ```
 from fab_addon_turbowidgets.widgets import JsonEditorWidget
