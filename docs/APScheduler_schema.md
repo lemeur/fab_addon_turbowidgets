@@ -1,7 +1,7 @@
 # Example Schema for APScheduler
 
 ## Generated form preview
-<img src="images/json_editor_dependencies.gif" width="4000">
+<img src="images/json_editor_dependencies.gif" width="400">
 
 ## Corresponding schema
 
