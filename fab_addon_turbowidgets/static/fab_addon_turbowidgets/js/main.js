@@ -31,7 +31,7 @@ function init_json_editor(fieldname, json_schema, starting_value, json_config) {
     }
     if (starting_value !== "{}") {
         startValObj = JSON.parse(starting_value)
-        newConfigObj =  {...newConfigObj, startval: startValOb}
+        newConfigObj =  {...newConfigObj, startval: startValObj}
     }
     theme = newConfigObj.theme
     iconlib = newConfigObj.iconlib
