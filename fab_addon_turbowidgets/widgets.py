@@ -47,7 +47,7 @@ class JsonEditorWidget(object):
         " %(before_js)s"
         '</script>'
         '<script>'
-            "init_json_editor('%(id)s', '%(json_schema)s', '%(starting_value)s', '%(json_config)s');"
+            "editor_%(id)s = init_json_editor('%(id)s', '%(json_schema)s', '%(starting_value)s', '%(json_config)s');"
         '</script>'
         '<script>'
         " %(after_js)s"
