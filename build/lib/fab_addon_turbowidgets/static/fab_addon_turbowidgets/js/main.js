@@ -47,6 +47,7 @@ function init_json_editor(fieldname, json_schema, starting_value, json_config) {
           document.getElementById(fieldname).value = JSON.stringify(editor.getValue());
         }
     });
+    return editor;
 }
 
 

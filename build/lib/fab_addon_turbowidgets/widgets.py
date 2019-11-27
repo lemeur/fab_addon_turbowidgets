@@ -47,16 +47,16 @@ class JsonEditorWidget(object):
         " %(before_js)s"
         '</script>'
         '<script>'
-            "init_json_editor('%(id)s', '%(json_schema)s', '%(starting_value)s', '%(json_config)s');"
+            "editor_%(id)s = init_json_editor('%(id)s', '%(json_schema)s', '%(starting_value)s', '%(json_config)s');"
         '</script>'
         '<script>'
         " %(after_js)s"
         '</script>'
     )
 
-    def __init__(self, schema, before_js=None,after_js=None, jseditor_config=DEFAULT_JSEDITOR_CONFIG):
+    def __init__(self, schema_getter_function, before_js=None,after_js=None, jseditor_config=DEFAULT_JSEDITOR_CONFIG):
         super().__init__()
-        self.schema = schema
+        self.schema = schema_getter_function()
         self.before_js = before_js
         self.after_js = after_js
         self.jseditor_config = jseditor_config
