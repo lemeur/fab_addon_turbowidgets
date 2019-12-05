@@ -22,11 +22,13 @@ class TurboWidgetsManager(BaseManager):
         """
         super(TurboWidgetsManager, self).__init__(appbuilder)
         #self.appbuilder.get_app.config.setdefault('MYADDON_KEY', 'SOME VALUE')
+        #self.static_bp = Blueprint('fab_addon_turbowidgets', __name__,
+        #                           url_prefix='/fab_addon_turbowidgets',
+        #                           static_folder='static/fab_addon_turbowidgets',
+        #                           static_url_path='static_fab_addon_turbowidgets')
         self.static_bp = Blueprint('fab_addon_turbowidgets', __name__,
-                                   url_prefix='/static_addon_turbowidgets',
-                                   template_folder='templates',
-                                   static_folder='static/fab_addon_turbowidgets',
-                                   static_url_path='/fab_addon_turbowidgets')
+                                   url_prefix='/fab_addon_turbowidgets',
+                                   static_folder='static/fab_addon_turbowidgets')
         self.addon_js = [('fab_addon_turbowidgets.static', 'js/jsoneditor.js'),
                          ('fab_addon_turbowidgets.static', 'js/main.js')]
         self.addon_css = [('fab_addon_turbowidgets.static', 'css/jsoneditor.min.css')]

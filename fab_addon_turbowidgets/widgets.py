@@ -41,25 +41,29 @@ class JsonEditorWidget(object):
 
     data_template = (
         '<input class="form-control hidden" %(text)s />'
-        '<div class="input-group" id="jse_%(id)s">'
+        '<div %(jse_params)s  id="jse_%(id)s">'
         "</div>"
         '<script>'
         " %(before_js)s"
         '</script>'
         '<script>'
             "editor_%(id)s = init_json_editor('%(id)s', '%(json_schema)s', '%(starting_value)s', '%(json_config)s');"
+            "if (typeof listOfJsonEditors === 'undefined') { listOfJsonEditors = new Object()};"
+            "listOfJsonEditors['%(id)s'] = editor_%(id)s;"
         '</script>'
         '<script>'
         " %(after_js)s"
         '</script>'
     )
 
-    def __init__(self, schema_getter_function, before_js=None,after_js=None, jseditor_config=DEFAULT_JSEDITOR_CONFIG):
+    def __init__(self, schema_getter_function, before_js=None,after_js=None, extra_classes=None, jseditor_config=DEFAULT_JSEDITOR_CONFIG, master_id=None):
         super().__init__()
         self.schema_getter_function = schema_getter_function
         self.before_js = before_js
         self.after_js = after_js
         self.jseditor_config = jseditor_config
+        self.extra_classes = extra_classes
+        self.master_id = master_id
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
@@ -71,25 +75,46 @@ class JsonEditorWidget(object):
             starting_value = "{}"
 
         schema = self.schema_getter_function()
+
+
+        input_classes = 'input-group'
+        if self.extra_classes:
+            input_classes = input_classes + ' ' + self.extra_classes
+
         if not schema:
             field.json_schema = "{}"
         else:
             field.json_schema = json.dumps(schema)
 
-        if not self.before_js:
-            self.before_js = "// No Extra Javascript given"
-        if not self.after_js:
-            self.after_js = "// No Extra Javascript given"
+        before_js = "// No Extra Javascript given"
+        if not callable(self.before_js) and self.before_js:
+            before_js = self.before_js
+        if callable(self.before_js):
+            before_js = self.before_js()
 
-        
+        after_js = "// No Extra Javascript given"
+        if not callable(self.after_js) and after_js:
+            after_js = self.after_js
+        if callable(self.after_js):
+            after_js = self.after_js()
+
 
         input_params = html_params(type="text", value=field.data, **kwargs)
-        template_string = self.data_template % {"text": input_params,
+        jse_dict = {
+            'id': "jse_{}".format(field.id),
+            'class': input_classes
+        }
+        if self.master_id:
+            jse_dict['master_id'] = self.master_id
+        jse_params = html_params(**jse_dict)
+        template_string = self.data_template % {
+                        "text": input_params,
+                        "jse_params": jse_params,
+                        "id": field.id,
                         "json_schema": field.json_schema,
                         "starting_value": starting_value,
                         "json_config": json.dumps(self.jseditor_config),
-                        "id": field.id,
-                        "before_js": self.before_js,
-                        "after_js": self.after_js
+                        "before_js": before_js,
+                        "after_js": after_js
                        }
         return HTMLString(template_string)
