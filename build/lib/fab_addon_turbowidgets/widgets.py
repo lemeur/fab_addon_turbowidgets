@@ -56,9 +56,9 @@ class JsonEditorWidget(object):
         '</script>'
     )
 
-    def __init__(self, schema_getter_function, before_js=None,after_js=None, extra_classes=None, jseditor_config=DEFAULT_JSEDITOR_CONFIG, master_id=None):
+    def __init__(self, json_schema, before_js=None,after_js=None, extra_classes=None, jseditor_config=DEFAULT_JSEDITOR_CONFIG, master_id=None):
         super().__init__()
-        self.schema_getter_function = schema_getter_function
+        self.json_schema = json_schema
         self.before_js = before_js
         self.after_js = after_js
         self.jseditor_config = jseditor_config
@@ -74,8 +74,10 @@ class JsonEditorWidget(object):
         else:
             starting_value = "{}"
 
-        schema = self.schema_getter_function()
-
+        if not callable(self.json_schema):
+            schema = self.json_schema
+        else:
+            schema = self.json_schema()
 
         input_classes = 'input-group'
         if self.extra_classes:

@@ -21,11 +21,6 @@ class TurboWidgetsManager(BaseManager):
              Use the constructor to setup any config keys specific for your app. 
         """
         super(TurboWidgetsManager, self).__init__(appbuilder)
-        #self.appbuilder.get_app.config.setdefault('MYADDON_KEY', 'SOME VALUE')
-        #self.static_bp = Blueprint('fab_addon_turbowidgets', __name__,
-        #                           url_prefix='/fab_addon_turbowidgets',
-        #                           static_folder='static/fab_addon_turbowidgets',
-        #                           static_url_path='static_fab_addon_turbowidgets')
         self.static_bp = Blueprint('fab_addon_turbowidgets', __name__,
                                    url_prefix='/fab_addon_turbowidgets',
                                    static_folder='static/fab_addon_turbowidgets')
