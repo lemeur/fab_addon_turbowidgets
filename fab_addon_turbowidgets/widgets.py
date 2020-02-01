@@ -3,8 +3,10 @@ import logging
 
 from flask_babel import lazy_gettext as _
 from markupsafe import Markup
-from wtforms import widgets
-from wtforms.widgets import Input, html_params, HTMLString
+#from wtforms import widgets
+from wtforms.widgets import html_params, HTMLString
+from wtforms import SelectField
+from wtforms.compat import izip, text_type
 
 log = logging.getLogger(__name__)
 
@@ -33,6 +35,35 @@ DEFAULT_JSEDITOR_CONFIG = {
        'disable_array_delete_last_row': 0,
        'prompt_before_delete': 1,
 }
+
+class DynamicSelectField(SelectField):
+    """
+    DynamicSelect
+    """
+
+    def __init__(
+        self,
+        label=None,
+        validators=None,
+        coerce=text_type,
+        choices_func=None,
+        validate_choice=True,
+        **kwargs
+    ):
+        super(DynamicSelectField, self).__init__(label, validators, **kwargs)
+        self.coerce = coerce
+        self.choices_func = choices_func
+        self.validate_choice = validate_choice
+
+    def iter_choices(self):
+        if not callable(self.choices_func):
+            choices = []
+        else:
+            choices = self.choices_func()
+
+        for value, label in choices:
+            yield (value, label, self.coerce(value) == self.data)
+        
 
 class JsonEditorWidget(object):
     """
