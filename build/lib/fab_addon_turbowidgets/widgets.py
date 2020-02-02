@@ -50,20 +50,33 @@ class DynamicSelectField(SelectField):
         validate_choice=True,
         **kwargs
     ):
-        super(DynamicSelectField, self).__init__(label, validators, **kwargs)
-        self.coerce = coerce
+        super(DynamicSelectField, self).__init__(label=label, validators=validators, coerce=coerce, **kwargs)
         self.choices_func = choices_func
-        self.validate_choice = validate_choice
+        self.validate_choice= validate_choice
 
     def iter_choices(self):
+        self.__set_choices__()
+        for value, label in self.choices:
+            yield (value, label, self.coerce(value) == self.data)
+        
+    def __set_choices__(self):
         if not callable(self.choices_func):
             choices = []
         else:
             choices = self.choices_func()
+        self.choices = choices
 
-        for value, label in choices:
-            yield (value, label, self.coerce(value) == self.data)
-        
+    def pre_validate(self, form):
+        self.__set_choices__()
+        log.debug("TIBO choices='{}'".format(repr(self.choices)))
+        if self.validate_choice:
+            for v, _ in self.choices:
+                if self.data == v:
+                    break
+            else:
+                raise ValueError(self.gettext("Not a valid choice"))
+
+
 
 class JsonEditorWidget(object):
     """
